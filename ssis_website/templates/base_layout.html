@@ -9,8 +9,8 @@
  
      <title> {% block title %} {% endblock title %} </title>
 
-     <body style = "background-color: #1f2833;">
-        <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #0b0c10;">
+     <body class="text-dark" style = "background-color: #ccc5b9;">
+        <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #252422;">
             <a class="navbar-brand " href="/homepage">Student Information System</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
@@ -20,7 +20,7 @@
               <ul class="navbar-nav mr-auto">
 
                 <li class="nav-item">
-                  <a class="nav-link" href="#">Students<span class="sr-only">(current)</span></a>
+                  <a class="nav-link" href="/student">Students<span class="sr-only">(current)</span></a>
                 </li>
 
                 <li class="nav-item">
@@ -56,9 +56,12 @@
             </div>
            
         </nav>
-
+        
+        <!-- this block only appears in the homepage template -->
         {% block haedline %} {% endblock %}
- 
+
+        <!--  this block is an input form in manage_student template -->
+        {% block manage_student %} {% endblock %}
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
