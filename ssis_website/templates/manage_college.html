@@ -1,0 +1,52 @@
+{% extends "base_layout.html" %}
+
+{% block manage_college %}
+<h1 class="text-center mt-2 mb-3">Manage Courses</h1>
+
+<div class="container container-fluid">
+    <div class="row">
+
+        <!-- This is a form for adding a college to the database -->
+        <form class='col-3' p-1>
+            <h4 class="text-center"> Add college</h4>
+        
+             <!--College code entry-->
+             <div class="form-group">
+                <label for="college_code">College Code</label>
+                <input type="text" class="form-control" id="college_code" name="college_code" placeholder="Enter college code">
+                <small id="lastname_help" class="form-text text-muted">College code should not be less than 3 characters .(e.g CCS)</small>
+            </div>
+
+            <!--College name entry-->
+            <div class="form-group">
+                <label for="Course">College name</label>
+                <input type="text" class="form-control" id="college_name" name="college_name" placeholder="Enter college name">
+
+            </div>
+           
+            
+           <!-- add college button -->
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary btn-lg mt-3 ">Add College</button>
+            </div>
+
+        </form>
+
+
+    <!-- table of student records -->
+    <table class="col-9 table mt-4 ms-5">
+        <thead class="text-light" style="background-color: #252422 ;">
+          <tr>
+            <th scope="col">Code</th>
+            <th scope="col">College name</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+        
+        </tbody>
+      </table>
+    </div>
+
+</div>
+{% endblock %}
