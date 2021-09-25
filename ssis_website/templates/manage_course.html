@@ -1,0 +1,61 @@
+{% extends "base_layout.html"%}
+
+{% block manage_course%}
+<h1 class="text-center mt-2 mb-3">Manage Courses</h1>
+
+<div class="container container-fluid">
+    <div class="row">
+
+        <!-- This is a form for adding a student to the database -->
+        <form class='col-3' p-1>
+            <h4 class="text-center"> Add course</h4>
+            <!--Id number entry -->
+      
+            <div>
+                <select class="form-control form-control-sm col ms-1 me-2" id="college" name="college">
+                    <option>College</option>
+                </select>
+            </div>
+            <small id="college_dropwdown_help" class="form-text text-muted">Select the right college.</small>
+        
+
+            <!--Course name entry-->
+            <div class="form-group">
+                <label for="Course">Course name</label>
+                <input type="text" class="form-control" id="course_name" name="course_name" placeholder="Enter course name">
+                <small id="course_name_help" class="form-text text-muted">Course must belong to the right college.</small>
+            </div>
+           
+             <!--Course code entry-->
+            <div class="form-group">
+                <label for="lastname">Course Code</label>
+                <input type="text" class="form-control" id="lastname" name="course_code" placeholder="Enter course code">
+                <small id="lastname_help" class="form-text text-muted">Course code must be 4 or more characters .(e.g BSCS)</small>
+            </div>
+
+           <!-- add course button -->
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary btn-lg mt-3 ">Add Course</button>
+            </div>
+
+        </form>
+
+
+    <!-- table of student records -->
+    <table class="col-9 table mt-4 ms-5">
+        <thead class="text-light" style="background-color: #252422 ;">
+          <tr>
+            <th scope="col">Code</th>
+            <th scope="col">Course name</th>
+            <th scope="col">College</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+        
+        </tbody>
+      </table>
+    </div>
+
+</div>
+{% endblock%}

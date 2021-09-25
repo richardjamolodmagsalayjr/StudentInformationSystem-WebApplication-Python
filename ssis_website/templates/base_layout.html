@@ -28,7 +28,7 @@
                 </li>
                 
                 <li class="nav-item">
-                  <a class="nav-link" href="#">Courses</a>
+                  <a class="nav-link" href="/course">Courses</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="/others">Others</a>
@@ -60,10 +60,13 @@
         <!-- this block only appears in the homepage template -->
         {% block haedline %} {% endblock %}
 
-        <!--  this block is an input form in manage_student template -->
+        <!--  this block is an input form to add to student and a table in manage_student template -->
         {% block manage_student %} {% endblock %}
+        
+        <!-- this is an input form to add to course and a table in manage_course template-->
+        {% block manage_course%} {% endblock %}
 
-    <!-- Optional JavaScript -->
+    <!-- Optional JavaScript --> 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>

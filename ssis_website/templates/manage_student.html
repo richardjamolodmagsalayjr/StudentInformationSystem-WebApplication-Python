@@ -8,10 +8,10 @@
 
             <!-- This is a form for adding a student to the database -->
             <form class='col-3' p-1>
-                
+                <h4 class="text-center"> Add student</h4>
                 <!--Id number entry -->
                 <div class="form-group ">   
-                    <label for="exampleInputPassword1">ID number</label>
+                    <label for="id_number">ID number</label>
                     <input type="text" class="form-control" id="id_number" name="id_number" placeholder="Enter ID number">
                     <small id="firstname_help" class="form-text text-muted">e.g 2019-0001.</small>
                 </div>
@@ -43,12 +43,12 @@
                </div>
 
                <!-- add student button -->
-                <div class="text-start">
-                    <button type="submit" class="btn btn-primary mt-3 ">Add Student</button>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary btn-lg mt-3 ">Add Student</button>
                 </div>
-
+                  
             </form>
-
+        
 
         <!-- table of student records -->
         <table class="col-9 table mt-4 ms-5">
@@ -60,18 +60,11 @@
                 <th scope="col">Gender</th>
                 <th scope="col">College</th>
                 <th scope="col">Course</th>
+                <th scope="col">Action</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-               
-              </tr>
-              <tr>
-               
-              </tr>
-              <tr>
-               
-              </tr>
+             
             </tbody>
           </table>
         </div>
