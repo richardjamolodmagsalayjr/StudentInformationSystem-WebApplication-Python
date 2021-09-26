@@ -1,18 +1,47 @@
 {% extends "base_layout.html"%}
 
 {% block manage_course%}
-<h1 class="text-center mt-2 mb-3">Manage Courses</h1>
+<h1 class="text-center mt-4 mb-3">Manage Courses</h1>
 
-<div class="container container-fluid">
-    <div class="row">
+<div class="container">
+    <!-- button trigger to show add course form modal--> 
+    <div class="d-flex justify-content-end">
+        <button class="btn btn-success me-5" type="button" data-bs-toggle="modal" data-bs-target="#add-course-modal">
+            Add College
+        </button>
+    </div>
+    
+    <table class="table mt-1 ms-5">
+        <thead class="text-light" style="background-color: #252422 ;">
+            <tr>
+            <th scope="col">Code</th>
+            <th scope="col">Course name</th>
+            <th scope="col">College</th>
+            <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
 
-        <!-- This is a form for adding a student to the database -->
-        <form class='col-3' p-1>
-            <h4 class="text-center"> Add course</h4>
-            <!--Id number entry -->
-      
+        </tbody>
+    </table>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="add-course-modal" tabindex="-1" aria-labelledby="add-course-label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="add-college-label">Add Course</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+           <!-- This is a form for adding a student to the database -->
+        <form>
+           
+            <!--Course entry -->
             <div>
-                <select class="form-control form-control-sm col ms-1 me-2" id="college" name="college">
+                <select class="form-control col ms-1 me-2" id="college" name="college">
                     <option>College</option>
                 </select>
             </div>
@@ -32,29 +61,15 @@
                 <small id="course_name_help" class="form-text text-muted">Course must belong to the right college.</small>
             </div>
 
-           <!-- add course button -->
-            <div class="text-center">
-                <button type="submit" class="btn btn-primary btn-lg mt-3 ">Add Course</button>
-            </div>
-
         </form>
 
-
-    <!-- table of student records -->
-    <table class="col-9 table mt-4 ms-5">
-        <thead class="text-light" style="background-color: #252422 ;">
-          <tr>
-            <th scope="col">Code</th>
-            <th scope="col">Course name</th>
-            <th scope="col">College</th>
-            <th scope="col">Action</th>
-          </tr>
-        </thead>
-        <tbody>
-        
-        </tbody>
-      </table>
+  
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Add Course</button>
+        </div>
+      </div>
     </div>
-
-</div>
+  </div>
 {% endblock%}

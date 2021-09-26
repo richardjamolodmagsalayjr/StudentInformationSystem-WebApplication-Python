@@ -1,54 +1,65 @@
 {% extends "base_layout.html" %}
 
 {% block manage_college %}
-<h1 class="text-center mt-2 mb-3">Manage Courses</h1>
+<h1 class="text-center mt-4 mb-3">Manage Colleges</h1>
 
-<div class="container container-fluid">
-    <div class="row">
+<div class="container">
+  <div class="d-flex justify-content-end">
+    <!-- button trigger to show add college form modal--> 
+      <button class="btn btn-success" type="button" data-bs-toggle="modal" data-bs-target="#add-college-modal">
+        Add College
+      </button>
+  </div>
 
-        <!-- This is a form for adding a college to the database -->
-        <form class='col-3' p-1>
-            <h4 class="text-center"> Add college</h4>
-        
-             <!--College code entry-->
-             <div class="form-group">
-                <label for="college_code">College Code</label>
-                <input type="text" class="form-control" id="college_code" name="college_code" placeholder="Enter college code">
-                <small id="lastname_help" class="form-text text-muted">College code should not be less than 3 characters .(e.g CCS)</small>
-            </div>
+    
+  <div>
+    <table class = "table  mt-1 ms-5">
+      <thead class="text-light" style="background-color: #252422 ;">
+        <tr>
+          <th scope="col">Code</th>
+          <th scope="col">College name</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- add python code here, displays the data in the database -->
+      </tbody>
+    </table>
+  </div>
 
-            <!--College name entry-->
-            <div class="form-group">
-                <label for="Course">College name</label>
-                <input type="text" class="form-control" id="college_name" name="college_name" placeholder="Enter college name">
 
-            </div>
-           
-            
-           <!-- add college button -->
-            <div class="text-center">
-                <button type="submit" class="btn btn-primary btn-lg mt-3 ">Add College</button>
-            </div>
 
+<!-- Modal -->
+<div class="modal fade" id="add-college-modal" tabindex="-1" aria-labelledby="add-college-label" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="add-college-label">Add College</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+           <!--College code entry-->
+          <div class="form-group">
+            <label for="college_code">College Code</label>
+            <input type="text" class="form-control" id="college_code" name="college_code" placeholder="Enter college code">
+            <small id="lastname_help" class="form-text text-muted">College code should not be less than 3 characters .(e.g CCS)</small>
+          </div>
+
+          <!--College name entry-->
+          <div class="form-group">
+            <label for="Course">College name</label>
+            <input type="text" class="form-control" id="college_name" name="college_name" placeholder="Enter college name">
+          </div>
+         
         </form>
 
-
-    <!-- table of student records -->
-    
-    <div class="col-9 mt-4 ms-5">
-      <table class = "table">
-          <thead class="text-light" style="background-color: #252422 ;">
-            <tr>
-              <th scope="col">Code</th>
-              <th scope="col">College name</th>
-              <th scope="col">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-          
-          </tbody>
-        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Add College</button>
       </div>
     </div>
+  </div>
 </div>
 {% endblock %}

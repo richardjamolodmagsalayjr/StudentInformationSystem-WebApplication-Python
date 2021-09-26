@@ -1,57 +1,21 @@
 {% extends "base_layout.html" %}
 
+
 {% block manage_student %} 
-    <h1 class="text-center mt-2 mb-3">Manage Students</h1>
+    <h1 class="text-center mt-4 mb-3">Manage Students</h1>
 
-    <div class="container container-fluid">
-        <div class="row">
+    
+     <div class="container d-flex justify-content-end">
 
-            <!-- This is a form for adding a student to the database -->
-            <form class='col-3' p-1>
-                <h4 class="text-center"> Add student</h4>
-                <!--Id number entry -->
-                <div class="form-group ">   
-                    <label for="id_number">ID number</label>
-                    <input type="text" class="form-control" id="id_number" name="id_number" placeholder="Enter ID number">
-                    <small id="firstname_help" class="form-text text-muted">e.g 2019-0001.</small>
-                </div>
+     <!-- button trigger to show add student form modal--> 
+        <button class="btn btn-success me-5" type="button" data-bs-toggle="modal" data-bs-target="#add-student-modal">
+            Add Student
+        </button>
+    </div>
 
-                <!--firstname entry-->
-                <div class="form-group">
-                    <label for="firstname">Firstname</label>
-                    <input type="text" class="form-control" id="firstname" name="firstname" placeholder="Enter firstname">
-                    <small id="firstname_help" class="form-text text-muted">Firstname must be 2 or more characters.</small>
-                </div>
-               
-                 <!--lastname entry-->
-                <div class="form-group">
-                    <label for="lastname">Lastname</label>
-                    <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Enter lastname">
-                    <small id="lastname_help" class="form-text text-muted">Lastname must be 2 or more characters.</small>
-                </div>
-
-               <!-- college and courses dropdowns, positioned inline -->
-               <div class="container">
-                    <div class="row">
-                        <select class="form-control form-control-sm col ms-1 me-2" id="college" name="college">
-                            <option>College</option>
-                        </select>
-                        <select class="form-control form-control-sm col col me-1" id="course" name="course">
-                            <option>Course</option>
-                        </select>
-                    </div>
-               </div>
-
-               <!-- add student button -->
-                <div class="text-center">
-                    <button type="submit" class="btn btn-primary btn-lg mt-3 ">Add Student</button>
-                </div>
-                  
-            </form>
-        
-
+    <div class="container">
         <!-- table of student records -->
-        <table class="col-9 table mt-4 ms-5">
+        <table class="table mt-1 ms-5">
             <thead class="text-light" style="background-color: #252422 ;">
               <tr>
                 <th scope="col">ID</th>
@@ -66,9 +30,61 @@
             <tbody>
              
             </tbody>
-          </table>
+        </table>
+    </div>
+
+    
+  <!-- Modal -->
+  <div class="modal fade" id="add-student-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Add Student</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+        <form>
+          <!--Id number entry -->
+          <div class="form-group">   
+            <label for="id_number">ID number</label>
+            <input type="text" class="form-control" id="id_number" name="id_number" placeholder="Enter ID number">
+            <small id="firstname_help" class="form-text text-muted">e.g 2019-0001.</small>
         </div>
 
+        <!--firstname entry-->
+        <div class="form-group">
+            <label for="firstname">Firstname</label>
+            <input type="text" class="form-control" id="firstname" name="firstname" placeholder="Enter firstname">
+            <small id="firstname_help" class="form-text text-muted">Firstname must be 2 or more characters.</small>
+        </div>
+       
+         <!--lastname entry-->
+        <div class="form-group">
+            <label for="lastname">Lastname</label>
+            <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Enter lastname">
+            <small id="lastname_help" class="form-text text-muted">Lastname must be 2 or more characters.</small>
+        </div>
+
+       <!-- college and courses dropdowns, positioned inline -->
+        <div class="container">
+            <div class="row">
+                <select class="form-control form-control-sm col ms-1 me-2" id="college" name="college">
+                    <option>College</option>
+                </select>
+                <select class="form-control form-control-sm col col me-1" id="course" name="course">
+                    <option>Course</option>
+                </select>
+            </div>
+       </div> 
+
+    </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Add Student</button>
+        </div>
+      </div>
     </div>
-    
+  </div>
 {% endblock %}
+
