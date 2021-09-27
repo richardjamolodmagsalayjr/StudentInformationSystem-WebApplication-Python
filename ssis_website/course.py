@@ -4,4 +4,4 @@ course = Blueprint('course', __name__)
 
 @course.route("/course")
 def manage_course():
-    return render_template("manage_course.html")
+    return render_template("course_page.html")
