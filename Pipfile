@@ -11,6 +11,8 @@ mysql-connector-python = "*"
 mysql-connector-python-rf = "*"
 pymysql = "*"
 cryptography = "*"
+mysql = "*"
+flask-mysql-connector = "*"
 
 [dev-packages]
 
