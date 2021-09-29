@@ -11,7 +11,7 @@
         </button>
     </div>
     
-    <table class="table mt-1 ms-5">
+    <table class="table table-dark mt-1 ms-5">
         <thead class="text-light" style="background-color: #252422 ;">
             <tr>
             <th scope="col">Code</th>
@@ -21,7 +21,16 @@
             </tr>
         </thead>
         <tbody>
-
+            <tr>
+                <td>BSCS</td>
+                <td>Bachelor of Science in Computer Scinece</td>
+                <td>CCS</td>
+                <td>
+                    <a href="#" class="btn btn-warning btn-sm px-3" data-bs-toggle="modal" data-bs-target="#edit-course-modal">Edit</a>
+                    <a class="mx-1"></a>
+                    <a href="#" class="btn btn-danger btn-sm" onclick="return confinrm('Are you sure to delete?')">Delete</a>
+                </td>
+            </tr>
         </tbody>
     </table>
 </div>
@@ -38,7 +47,6 @@
         <div class="modal-body">
            <!-- This is a form for adding a student to the database -->
         <form>
-           
             <!--Course entry -->
             <div>
                 <select class="form-control col ms-1 me-2" id="college" name="college">
@@ -60,15 +68,13 @@
                 <input type="text" class="form-control" id="course_name" name="course_name" placeholder="Enter course name">
                 <small id="course_name_help" class="form-text text-muted">Course must belong to the right college.</small>
             </div>
-
+            </div>
+            
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Add Course</button>
+            </div>
         </form>
-
-  
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Add Course</button>
-        </div>
       </div>
     </div>
   </div>
