@@ -32,17 +32,21 @@
 
       <tbody>
           <!-- add python code here to display student data-->
-          <td>2019-2577</td>
-          <td>Richard Jr.</td>
-          <td>Magsalay</td>
-          <td>Bachelor of science in Computer Science</td>
-          <td>3</td>
-          <td>Male</td>
-          <td>
-            <a href="#" class="btn btn-warning btn-sm px-3" data-bs-toggle="modal" data-bs-target="#edit-student-modal">Edit</a>
-            <a class="mx-1"></a>
-            <a href="#" class="btn btn-danger btn-sm" onclick="return confinrm('Are you sure to delete?')">Delete</a>
-          </td>
+          {% for student in students%}
+          <tr>
+            <td>{{student[0]}}</td>
+            <td>{{student[1]}}</td>
+            <td>{{student[2]}}</td>
+            <td>{{student[3]}}</td>
+            <td>{{student[4]}}</td>
+            <td>{{student[5]}}</td>
+            <td>
+              <a href="#" class="btn btn-warning btn-sm px-3" data-bs-toggle="modal" data-bs-target="#edit-student-modal">Edit</a>
+              <a class="mx-1"></a>
+              <a href="#" class="btn btn-danger btn-sm" onclick="return confinrm('Are you sure to delete?')">Delete</a>
+            </td>
+          </tr>
+          {% endfor %}
       </tbody>
     </table>
   </div>
@@ -108,7 +112,7 @@
 
             <!-- year_level entry -->
             <div class='form-group'>
-              <select type="text" required=True class="form-control col ms-1 me-2" id="year_level" name="year_level">
+              <select type="number" required=True class="form-control col ms-1 me-2" id="year_level" name="year_level">
                 <option disabled selected><b>Year</b></option>
                 <option>1</option>
                 <option>2</option>
