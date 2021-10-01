@@ -16,7 +16,8 @@ student = Blueprint('student', __name__)
 @student.route("/student", methods=['GET', 'POST'])
 def displayStudentPage():
     students = db.Student.display_students()
-    return render_template("student_page.html", students=students)  
+    course_options = db.Course.get_course()
+    return render_template("student_page.html", students=students, course_options=course_options)  
 
 @student.route("/student/add_student", methods=['GET', 'POST'])
 def addStudent():
@@ -28,9 +29,13 @@ def addStudent():
         course_code = request.form['course_code']
         year_level = int(request.form['year_level'])
 
-
         student = db.Student(id_number, firstname, lastname, gender, year_level, course_code)
         student.add_student()
-        #print(id_number,firstname,lastname,course_code,gender,year_level)
+        flash('Added student Successfully!', 'success')
 
     return redirect(url_for('student.displayStudentPage'))
+
+# @student.route("/student/delete_student", methods=['GET', 'POST'])
+# def deleteStudent():
+#     if request.method == "POST":
+

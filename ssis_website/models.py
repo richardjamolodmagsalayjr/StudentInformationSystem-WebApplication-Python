@@ -28,10 +28,71 @@ class Student():
                 self.year]
         cursor.execute(query, data)
         database.commit() 
-        
+
     @classmethod
     def display_students(cls):
         query = "SELECT * FROM students"
         cursor.execute(query)    
-        result = cursor.fetchall()
-        return result 
+        students = cursor.fetchall()
+        return students 
+
+    @classmethod
+    def delete_student(cls, id):
+        query = "DELETE student WHERE student_id={id}"
+        cursor.execute(query)
+        database.commit()
+
+class Course():
+    def __init__(self, course_code, course_name, college_code):
+        self.course_code = course_code 
+        self.course_name = course_name
+        self.college_code = college_code
+
+    #this method is used to display course options in the add student form
+    #returns a list of tuples
+    @classmethod
+    def get_course(cls):
+        query = "SELECT * FROM courses"
+        cursor.execute(query)
+        courses = cursor.fetchall()
+        return courses 
+    
+    def add_course(self):
+        query = "INSERT INTO courses(course_code, course_name, college_code_id) VALUES \
+                 (%s,%s,%s)"
+        data = [self.course_code, self.course_name, self.college_code]
+        cursor.execute(query, data)
+        database.commit()
+
+    @classmethod
+    def display_courses(cls):
+        query = "SELECT * FROM courses"
+        cursor.execute(query)
+        courses = cursor.fetchall()
+        return courses 
+
+class College():
+    def __init__(self, college_code, college_name):
+        self.college_code = college_code
+        self.college_name = college_name
+
+    #use to get available colleges in the database as dropdown options    
+    @classmethod
+    def get_colleges(cls):
+        query = "SELECT * FROM colleges"
+        cursor.execute(query)
+        colleges = cursor.fetchall()
+        return colleges
+
+    def add_college(self):
+        query = "INSERT INTO colleges(college_code, college_name) VALUES (%s,%s)"
+        data = [self.college_code, self.college_name]
+        cursor.execute(query, data)
+        database.commit()
+
+    @classmethod
+    def display_colleges(cls):
+        query = "SELECT * FROM colleges"
+        cursor.execute(query)
+        colleges = cursor.fetchall()
+        return colleges

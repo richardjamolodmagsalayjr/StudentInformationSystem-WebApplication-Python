@@ -23,15 +23,17 @@
       </thead>
       <tbody>
         <!-- add python code here, displays the data in the database -->
+        {% for college in colleges %}
         <tr>
-          <td>CCS</td>
-          <td>College of Computer Studies</td>
+          <td>{{college[0]}}</td>
+          <td>{{college[1]}}</td>
           <td>
             <a href="#" class="btn btn-warning btn-sm px-3" data-bs-toggle="modal" data-bs-target="#edit-college-modal">Edit</a>
             <a class="mx-1"></a>
-            <a href="#" class="btn btn-danger btn-sm" onclick="return confinrm('Are you sure to delete?')">Delete</a>
+            <a href="#" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure to delete?')">Delete</a>
           </td>
         </tr>
+        {% endfor %}
       </tbody>
     </table>
   </div>
@@ -47,7 +49,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form>
+        <form action="{{url_for('college.addCollege')}}" method="POST">
            <!--College code entry-->
           <div class="form-group">
             <label for="college_code">College Code</label>
