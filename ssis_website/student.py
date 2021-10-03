@@ -4,14 +4,6 @@ import ssis_website.models as db
 
 student = Blueprint('student', __name__)
 
-# database = mysql.connector.connect(
-#     host = "localhost",
-#     user = "root",
-#     port = "3306",
-#     passwd= "password12345",
-#     database = "information_system"
-#     )
-# cursor = database.cursor()
 
 @student.route("/student", methods=['GET', 'POST'])
 def displayStudentPage():
@@ -35,7 +27,24 @@ def addStudent():
 
     return redirect(url_for('student.displayStudentPage'))
 
-# @student.route("/student/delete_student", methods=['GET', 'POST'])
-# def deleteStudent():
-#     if request.method == "POST":
+@student.route("/student/edit_student", methods=['GET', 'POST'])
+def editStudent():
+    if request.method == "POST":
+        old_id_number = request.form['old_id_number']
+        id_number = request.form['id_number']
+        firstname = request.form['firstname']
+        lastname = request.form['lastname']
+        gender = request.form['gender']
+        course_code = request.form['course_code']
+        year_level = int(request.form['year_level'])
+        db.Student.edit_student(id_number, firstname, lastname, gender, year_level, course_code, old_id_number)
 
+    return redirect(url_for('student.displayStudentPage'))
+
+@student.route("/student/delete_student", methods=["POST"]) 
+def deleteStudent():
+    if request.method == "POST":
+        student_id = request.form.get('student_id_del')
+        db.Student.delete_student(student_id)
+    
+    return redirect(url_for("student.displayStudentPage"))

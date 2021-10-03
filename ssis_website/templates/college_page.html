@@ -28,19 +28,58 @@
           <td>{{college[0]}}</td>
           <td>{{college[1]}}</td>
           <td>
-            <a href="#" class="btn btn-warning btn-sm px-3" data-bs-toggle="modal" data-bs-target="#edit-college-modal">Edit</a>
+            <a href="#" class="btn btn-warning btn-sm px-3" data-bs-toggle="modal" data-bs-target="#edit-college-modal{{college[0]}}">Edit</a>
             <a class="mx-1"></a>
-            <a href="#" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure to delete?')">Delete</a>
+            
+            <form hidden id="del" action="{{url_for('college.deleteCollege')}}" method="POST">
+              <input hidden  value={{college[0]}} name="college_code_del">
+            </form>
+            <button type="submit"  form="del" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure to delete?')">Delete</button>
+            
           </td>
         </tr>
+        <!-- Edit modal -->
+          <div class="modal fade" id="edit-college-modal{{college[0]}}" tabindex="-1" aria-labelledby="edit-college-label" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="add-college-label">Edit College</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <form action="{{url_for('college.editCollege')}}" method="POST">
+
+                    <input type="hidden" class="form-control" id="old_college_code" name="old_college_code" value="{{college[0]}}">
+                    <!--College code entry-->
+                    <div class="form-group">
+                      <label for="college_code">College Code</label>
+                      <input type="text" class="form-control" id="college_code" name="college_code" value="{{college[0]}}">
+                      <small id="lastname_help" class="form-text text-muted">College code should not be less than 3 characters .(e.g CCS)</small>
+                    </div>
+          
+                    <!--College name entry-->
+                    <div class="form-group">
+                      <label for="Course">College name</label>
+                      <input type="text" class="form-control" id="college_name" name="college_name" value="{{college[1]}}">
+                    </div>
+                </div>
+          
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Update College</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
         {% endfor %}
       </tbody>
     </table>
   </div>
+  
+  
 
-
-
-<!-- Modal -->
+<!-- Add Modal -->
 <div class="modal fade" id="add-college-modal" tabindex="-1" aria-labelledby="add-college-label" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">

@@ -54,9 +54,117 @@
             <td>
               <a href="#" class="btn btn-warning btn-sm px-3" data-bs-toggle="modal" data-bs-target="#edit-student-modal{{student[0]}}">Edit</a>
               <a class="mx-1"></a>
-              <a href="#" class="btn btn-danger btn-sm" data-id="{{student[0]}}" onclick="return confirm('Are you sure to delete?')">Delete</a>
+              <form hidden id="del" action="{{url_for('student.deleteStudent')}}" method="POST">
+                <input hidden  value={{student[0]}} name="student_id_del">
+              </form>
+              <button type="submit"  form="del" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure to delete?')">Delete</button>
             </td>
           </tr>
+                        
+            <div class="modal fade" id="edit-student-modal{{student[0]}}" tabindex="-1" aria-labelledby="edit-student-label" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="edit-modal-label">Edit Student</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                    <div class="modal-body">
+                      <form action="{{url_for('student.editStudent')}}" method="POST">
+                        <!--old Id number entry -->
+                        <div class="form-group">   
+                          <input type="text" 
+                          class="form-control" 
+                          id="old_id_number" 
+                          name="old_id_number" 
+                          value="{{student[0]}}"
+                          required=True
+                          hidden
+                          />
+                        </div>
+                        <!--Id number entry -->
+                        <div class="form-group">   
+                          <label for="id_number">ID number</label>
+                          <input type="text" 
+                          class="form-control" 
+                          id="id_number" 
+                          name="id_number" 
+                          value="{{student[0]}}"
+                          required=True
+                          />
+                          <small id="firstname_help" class="form-text text-muted">e.g 2019-0001.</small>
+                        </div>
+
+                      <!--firstname entry-->
+                      <div class="form-group">
+                          <label for="firstname">Firstname</label>
+                          <input type="text" 
+                            class="form-control" 
+                            id="firstname" 
+                            name="firstname" 
+                            value="{{student[1]}}"
+                            required=True
+                          />
+                          <small id="firstname_help" class="form-text text-muted">Firstname must be 2 or more characters.</small>
+                      </div>
+                      
+                        <!--lastname entry-->
+                      <div class="form-group">
+                          <label for="lastname">Lastname</label>
+                          <input type="text" 
+                            class="form-control" 
+                            id="lastname" 
+                            name="lastname" 
+                            value="{{student[2]}}"
+                            required=True
+                          />
+                          <small id="lastname_help" class="form-text text-muted">Lastname must be 2 or more characters.</small>
+                      </div>
+
+                      <!-- gender entry -->
+                      <div class='form-group'>
+                        <select required=True class="form-control col ms-1 me-2" id="gender" name="gender">
+                          <option disabled>Gender</option>
+                          <option>Male</option>
+                          <option>Female</option>
+                          <option>Others</option>
+                        </select>
+                      </div>
+
+                      <!-- year_level entry -->
+                      <div class='form-group'>
+                        <select type="number" required=True class="form-control col ms-1 me-2" id="year_level" name="year_level">
+                          <option disabled><b>Year</b></option>
+                          
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                          
+                        </select>
+                      </div>
+
+                      <div class='form-group'>
+                        <select  required=True class="form-control col col me-1" id="course_code" name="course_code">
+                            <option disabled>Course</option>
+                            {% for course in course_options %}
+                              {% if course[0] == student[3] %}
+                                <option selected>{{student[3]}}</option>
+                              {% else %}
+                                <option>{{course[0]}}</option>
+                              {% endif %}
+                            {% endfor %}
+                        </select>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <button type="submit" class="btn btn-primary">Update Student</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
           {% endfor %}
       </tbody>
     </table>
@@ -153,94 +261,6 @@
     </div>
   </div>
 
-Edit or Update student Modal
-<div class="modal fade" id="edit-student-modal" tabindex="-1" aria-labelledby="edit-student-label" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Edit Student</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-        <div class="modal-body">
-          <form method="POST">
-            <!--Id number entry -->
-            <div class="form-group">   
-              <label for="id_number">ID number</label>
-              <input type="text" 
-              class="form-control" 
-              id="id_number" 
-              name="id_number" 
-              placeholder="Enter ID number"
-              required=True
-              />
-              <small id="firstname_help" class="form-text text-muted">e.g 2019-0001.</small>
-            </div>
 
-          <!--firstname entry-->
-          <div class="form-group">
-              <label for="firstname">Firstname</label>
-              <input type="text" 
-                class="form-control" 
-                id="firstname" 
-                name="firstname" 
-                placeholder="Enter firstname"
-                required=True
-              />
-              <small id="firstname_help" class="form-text text-muted">Firstname must be 2 or more characters.</small>
-          </div>
-          
-            <!--lastname entry-->
-          <div class="form-group">
-              <label for="lastname">Lastname</label>
-              <input type="text" 
-                class="form-control" 
-                id="lastname" 
-                name="lastname" 
-                placeholder="Enter lastname"
-                required=True
-              />
-              <small id="lastname_help" class="form-text text-muted">Lastname must be 2 or more characters.</small>
-          </div>
-
-          <!-- gender entry -->
-          <div class='form-group'>
-            <select required=True class="form-control col ms-1 me-2" id="gender" name="gender">
-              <option disabled selected>Gender</option>
-              <option>Male</option>
-              <option>Female</option>
-              <option>Others</option>
-            </select>
-          </div>
-
-          <!-- year_level entry -->
-          <div class='form-group'>
-            <select type="number" required=True class="form-control col ms-1 me-2" id="year_level" name="year_level">
-              <option disabled selected><b>Year</b></option>
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
-            </select>
-          </div>
-
-          <div class='form-group'>
-            <select  required=True class="form-control col col me-1" id="course_code" name="course_code">
-                <option disabled selected hidden>Course</option>
-                {% for course in course_options %}
-                  <option>{{course[1]}}</option>
-                {% endfor %}
-            </select>
-          </div>
-
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Add Student</button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
 {% endblock %}
 
