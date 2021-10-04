@@ -39,3 +39,11 @@ def deleteCourse():
         db.Course.delete_course(course_code)
     
     return redirect(url_for("course.displayCoursePage"))
+
+@course.route("/course/search", methods=["GET","POST"])
+def searchCourse():
+    if request.method == "POST":
+        course_search_key = request.form['course_search_key']
+        results = db.Course.search_course(course_search_key)
+
+    return render_template("course_page.html", courses=results)

@@ -51,6 +51,16 @@ class Student():
         cursor.execute(query,data)
         database.commit()
 
+    @classmethod 
+    def search_student(cls, key):
+        query = "SELECT * FROM students WHERE student_id=%s or firstname=%s or lastname=%s or course_code_id=%s \
+            or year=%s or gender=%s"
+
+        data = [key,key,key,key,key,key]
+        cursor.execute(query,data)
+        results = cursor.fetchall()
+        return results
+
 class Course():
     def __init__(self, course_code, course_name, college_code):
         self.course_code = course_code 
@@ -94,6 +104,14 @@ class Course():
         cursor.execute(query, data)
         database.commit()
 
+    @classmethod
+    def search_course(cls, key):
+        query = "SELECT * FROM courses WHERE course_code=%s or course_name=%s or college_code_id=%s"
+        data = [key,key, key]
+        cursor.execute(query,data)
+        result = cursor.fetchall()
+        return result
+
 class College():
     def __init__(self, college_code, college_name):
         self.college_code = college_code
@@ -133,3 +151,11 @@ class College():
         data = [college_code, college_name, old_college_code]
         cursor.execute(query, data)
         database.commit()
+
+    @classmethod
+    def search_college(cls, key):
+        query = "SELECT * FROM colleges WHERE college_code=%s or college_name=%s"
+        data = [key,key]
+        cursor.execute(query,data)
+        result = cursor.fetchall()
+        return result

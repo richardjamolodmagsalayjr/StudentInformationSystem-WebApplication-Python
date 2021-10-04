@@ -17,13 +17,24 @@
     {% endfor %} 
   {% endif %} 
   {% endwith %}
- 
-<!-- button trigger to show add student form modal-->
-  <div class="container d-flex justify-content-end">
-    <button class="btn btn-success me-5" type="button" data-bs-toggle="modal" data-bs-target="#add-student-modal">
-        Add Student
-    </button>
+      
+  <div class="container">
+    <div class="row justify-content-between">
+      <div class="col-5">
+        <button class="btn btn-success me-5" type="button" data-bs-toggle="modal" data-bs-target="#add-student-modal">
+            Add Student
+        </button>
+      </div>
+      <div class="col-4">
+        <form class="form-inline my-2 my-lg-0" action="{{url_for('student.searchStudent')}}" method="POST">
+          <input class="form-control mr-sm-2" name="student_search_key" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
   </div>
+<!-- button trigger to show add student form modal-->
+  
 
   <div class="container">
   <!-- table of student records -->

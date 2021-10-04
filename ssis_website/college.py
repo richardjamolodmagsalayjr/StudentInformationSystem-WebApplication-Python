@@ -38,3 +38,11 @@ def editCollege():
     return redirect(url_for("college.displayCollegePage"))
 
 
+@college.route("/college/search", methods=["GET","POST"])
+def searchCollege():
+    result = []
+    if request.method == "POST":
+        college_search_key = request.form['college_search_key']
+        result = db.College.search_college(college_search_key)
+
+    return render_template("college_page.html", colleges = result)

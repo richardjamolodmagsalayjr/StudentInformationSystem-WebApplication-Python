@@ -37,6 +37,7 @@ def editStudent():
         gender = request.form['gender']
         course_code = request.form['course_code']
         year_level = int(request.form['year_level'])
+        
         db.Student.edit_student(id_number, firstname, lastname, gender, year_level, course_code, old_id_number)
 
     return redirect(url_for('student.displayStudentPage'))
@@ -48,3 +49,11 @@ def deleteStudent():
         db.Student.delete_student(student_id)
     
     return redirect(url_for("student.displayStudentPage"))
+
+@student.route("/student/search_student", methods=["GET","POST"])
+def searchStudent():
+    if request.method == "POST":
+        student_search_key = request.form['student_search_key']
+        result = db.Student.search_student(student_search_key)
+
+    return render_template("student_page.html", students=result)

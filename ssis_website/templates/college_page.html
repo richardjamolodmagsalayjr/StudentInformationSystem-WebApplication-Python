@@ -4,21 +4,33 @@
 <h1 class="text-center mt-4 mb-3">Manage Colleges</h1>
 
 <div class="container">
-  <div class="d-flex justify-content-end">
-    <!-- button trigger to show add college form modal--> 
-      <button class="btn btn-success" type="button" data-bs-toggle="modal" data-bs-target="#add-college-modal">
+   <!-- button trigger to show add college form modal-->
+  <div class="container">
+    <div class="row justify-content-between">
+      <div class="col-4">
+        <button class="btn btn-success me-6" type="button" data-bs-toggle="modal" data-bs-target="#add-college-modal">
         Add College
-      </button>
+        </button>
+      </div>
+      <div class="col-4">
+        <form class="form-inline my-2 my-lg-0" action="{{url_for('college.searchCollege')}}" method="POST">
+          <input class="form-control mr-sm-2" name="college_search_key" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
   </div>
-
     
+   
+ 
+
   <div>
     <table class = "table table-dark mt-1 ms-5">
       <thead class="text-light" style="background-color: #252422 ;">
         <tr>
-          <th scope="col">Code</th>
-          <th scope="col">College name</th>
-          <th scope="col">Action</th>
+          <th scope="col-2">Code</th>
+          <th scope="col-5">College name</th>
+          <th scope="col-2">Action</th>
         </tr>
       </thead>
       <tbody>
@@ -77,8 +89,6 @@
     </table>
   </div>
   
-  
-
 <!-- Add Modal -->
 <div class="modal fade" id="add-college-modal" tabindex="-1" aria-labelledby="add-college-label" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
