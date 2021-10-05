@@ -1,5 +1,5 @@
 #from ssis_website import database
-from config import DB_USERNAME, DB_PASSWORD, DB_NAME, DB_HOST, SECRET_KEY, DB_PORT, DB_AUTH
+from config import DB_USERNAME, DB_PASSWORD, DB_NAME, DB_HOST, SECRET_KEY, DB_PORT
 import mysql.connector
 
 database = mysql.connector.connect(

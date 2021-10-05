@@ -13,7 +13,7 @@ def create_app():
         MYSQL_HOST=DB_HOST
     )
     #mysql.init_app(app) 
-  
+    
     from .views import views
     from .college import college
     from .course import course

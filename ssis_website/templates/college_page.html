@@ -1,19 +1,18 @@
 {% extends "base_layout.html" %}
 
+{% block page_label %}Manage Colleges{% endblock %}
 {% block manage_college %}
-<h1 class="text-center mt-4 mb-3">Manage Colleges</h1>
 
-<div class="container">
    <!-- button trigger to show add college form modal-->
   <div class="container">
     <div class="row justify-content-between">
-      <div class="col-4">
+      <div class="col">
         <button class="btn btn-success me-6" type="button" data-bs-toggle="modal" data-bs-target="#add-college-modal">
         Add College
         </button>
       </div>
       <div class="col-4">
-        <form class="form-inline my-2 my-lg-0" action="{{url_for('college.searchCollege')}}" method="POST">
+        <form class="d-flex" action="{{url_for('college.searchCollege')}}" method="POST">
           <input class="form-control mr-sm-2" name="college_search_key" type="search" placeholder="Search" aria-label="Search">
           <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
@@ -24,13 +23,13 @@
    
  
 
-  <div>
-    <table class = "table table-dark mt-1 ms-5">
+  <div class="container">
+    <table class = "table table-dark mt-1">
       <thead class="text-light" style="background-color: #252422 ;">
         <tr>
           <th scope="col-2">Code</th>
           <th scope="col-5">College name</th>
-          <th scope="col-2">Action</th>
+          <th scope="col-2" class="text-center">Action</th>
         </tr>
       </thead>
       <tbody>
@@ -39,7 +38,7 @@
         <tr>
           <td>{{college[0]}}</td>
           <td>{{college[1]}}</td>
-          <td>
+          <td class="text-center">
             <a href="#" class="btn btn-warning btn-sm px-3" data-bs-toggle="modal" data-bs-target="#edit-college-modal{{college[0]}}">Edit</a>
             <a class="mx-1"></a>
             
@@ -60,7 +59,7 @@
                 </div>
                 <div class="modal-body">
                   <form action="{{url_for('college.editCollege')}}" method="POST">
-
+                    
                     <input type="hidden" class="form-control" id="old_college_code" name="old_college_code" value="{{college[0]}}">
                     <!--College code entry-->
                     <div class="form-group">
