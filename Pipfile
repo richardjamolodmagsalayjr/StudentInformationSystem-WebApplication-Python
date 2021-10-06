@@ -6,8 +6,8 @@ name = "pypi"
 [packages]
 flask = "*"
 python-dotenv = "*"
-flask-wtf = "*"
 mysql-connector-python-rf = "*"
+flask-wtf = "*"
 
 [dev-packages]
 

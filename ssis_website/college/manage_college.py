@@ -1,19 +1,22 @@
-from flask import Blueprint, render_template, request, flash, redirect, url_for
+from flask import render_template, request, flash, redirect, url_for
 import ssis_website.models as db
 import re 
+from ssis_website.college.college_form import CollegeForm
+from . import college_bp 
+#college = Blueprint('college', __name__)
 
-college = Blueprint('college', __name__)
-
-@college.route("/college")
+@college_bp.route("/college")
 def displayCollegePage():
+    form = CollegeForm()
     colleges = db.College.display_colleges()
-    return render_template("college_page.html", colleges = colleges)
+    return render_template("college_page.html", colleges = colleges, form = form)
 
-@college.route("/college/add_college", methods = ["GET", "POST"])
+@college_bp.route("/college/add_college", methods = ["GET", "POST"])
 def addCollege():
+    form = CollegeForm()
     if request.method == "POST":
-        college_code = request.form['college_code'].upper()
-        college_name = request.form['college_name'].upper()
+        college_code = form.college_code.data.upper()
+        college_name = form.college_name.data.upper()
 
         try:
             if validateCollegeCode(college_code):
@@ -27,43 +30,45 @@ def addCollege():
 
     return redirect(url_for("college.displayCollegePage"))
 
-@college.route("/college/delete_college", methods=["POST"]) 
+@college_bp.route("/college/delete_college", methods=["POST"]) 
 def deleteCollege():
     if request.method == "POST":
-        college_code = request.form.get('college_code_del')
-        db.College.delete_college(college_code)
+        college_code_del = request.form.get('college_code_del')
+        db.College.delete_college(college_code_del)
     
     return redirect(url_for("college.displayCollegePage"))
 
-@college.route("/college/edit_college", methods=["POST"]) 
+@college_bp.route("/college/edit_college", methods=["POST"]) 
 def editCollege():
-    
-    if request.method == "POST":
+    form = CollegeForm()
+    if request.method == "POST" and form.validate():
         old_college_code = request.form.get('old_college_code').upper()
-        college_code = request.form['college_code'].upper()
-        college_name = request.form['college_name'].upper()
-       
-
+        college_code = form.college_code.data.upper()
+        college_name = form.college_name.data.upper()
+      
         try:
             if validateCollegeCode(college_code):
                 db.College.edit_college(college_code, college_name, old_college_code)
-                flash("College record added successfully!", 'success')
+                flash("College record updated successfully!", 'success')
             else:
                 flash('Invalid college code, unable to update college record! ', 'danger')
         except:
-            flash("College code was already used, unable to add college record.", 'danger')
+            flash("College code was already used, unable to update college record.", 'danger')
     
     return redirect(url_for("college.displayCollegePage"))
 
 
-@college.route("/college/search", methods=["GET","POST"])
+@college_bp.route("/college/search", methods=["GET","POST"])
 def searchCollege():
     result = []
+    form = CollegeForm()
     if request.method == "POST":
         college_search_key = request.form['college_search_key']
         result = db.College.search_college(college_search_key)
+        if len(result) == 0:
+            result = db.College.display_colleges()
 
-    return render_template("college_page.html", colleges = result)
+    return render_template("college_page.html", colleges = result, form=form)
 
 def validateCollegeCode(code):
     pattern1 = re.compile(r'C\w{2}')

@@ -3,20 +3,21 @@
 {% block page_label %}Manage Courses{% endblock %}
 {% block manage_course%}
 
-
-
 <!-- button trigger to show add course form modal--> 
 <div class="container">
     <div class="row justify-content-between">
         <div class="col-4">
             <button class="btn btn-success me-5" type="button" data-bs-toggle="modal" data-bs-target="#add-course-modal">
+                <i class="bi bi-plus-circle"></i>
                 Add Course
             </button>
         </div>
         <div class="col-4">
         <form class="d-flex" action="{{url_for('course.searchCourse')}}" method="POST">
             <input class="form-control mr-sm-2" name="course_search_key" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            <button class="btn btn-primary my-2 my-sm-0 px-4" type="submit">
+            <i class="bi bi-search"></i>
+            </button>
         </form>
         </div>
     </div>
@@ -39,12 +40,19 @@
             <td>{{course[1]}}</td>
             <td>{{course[2]}}</td>
             <td class="text-center">
-                <a href="#" class="btn btn-warning btn-sm px-3" data-bs-toggle="modal" data-bs-target="#edit-course-modal{{course[0]}}">Edit</a>
+                <a href="#" class="btn btn-warning btn-sm px-3" data-bs-toggle="modal" data-bs-target="#edit-course-modal{{course[0]}}">
+                    <i class="bi bi-pencil-square"></i>
+                    Edit
+                </a>
                 <a class="mx-1"></a>
-                <form hidden id="del" action="{{url_for('course.deleteCourse')}}" method="POST">
-                    <input hidden  value={{course[0]}} name="course_code_del">
+                <form hidden id="del{{course[0]}}" action="{{url_for('course.deleteCourse')}}" method="POST">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                    <input hidden  value="{{course[0]}}" name="course_code_del">
                 </form>
-                    <button type="submit"  form="del" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure to delete?')">Delete</button>
+                    <button type="submit"  form="del{{course[0]}}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure to delete?')">
+                        <i class="bi bi-dash-circle"></i>
+                        Delete
+                    </button>
             </td>
         </tr>
         <!-- Edit Modal -->
@@ -58,41 +66,52 @@
                 <div class="modal-body">
                 <!-- This is a form for adding a student to the database -->
                 <form action="{{url_for('course.editCourse')}}" method="POST">
-
+                    <!-- hidden csrf token for security purposes -->
+                    {{ form.csrf_token }}
+                    {{ form.hidden_tag() }}
+                    <!-- a hidden input used for changing primary keys -->
                     <input type="text" class="form-control" id="old_course_code" name="old_course_code" value="{{course[0]}}" hidden>
-                    <!--Course entry -->
+
+                    <!--College entry -->
                     <div>
-                        <select class="form-control col ms-1 me-2" id="college_code" name="college_code">
-                            <option disabled>College</option>
-                            {% for college in college_options %}
-                                {% if college[0] == course[2] %}
-                                    <option selected>{{course[2]}}</option>
-                                {% else %}
-                                    <option>{{college[0]}}</option>
-                                {% endif %} 
-                            {% endfor %}
-                        </select>
-                    </div>
+                    <select class="form-control col ms-1 me-2" id="college_code" name="college_code">
+                        <option disabled>College</option>
+                        {% for college in college_options %}
+                            {% if college[0] == course[2] %}
+                                <option selected>{{course[2]}}</option>
+                            {% else %}
+                                <option>{{college[0]}}</option>
+                            {% endif %} 
+                        {% endfor %}
+                    </select>
                     <small id="college_dropwdown_help" class="form-text text-muted">Select the right college.</small>
-                
+                    </div>
+                    
                     <!--Course code entry-->
                     <div class="form-group">
+                        {{ form.course_code.label(class="form-label") }}
+                        {{ form.course_code(class="form-control", value=course[0]) }}
+                    </div>
+                    <!-- <div class="form-group">
                         <label for="course_code">Course Code</label>
                         <input type="text" class="form-control" id="course_code" name="course_code" value="{{course[0]}}">
                         <small id="lastname_help" class="form-text text-muted">Course code must be 4 or more characters .(e.g BSCS)</small>
-                    </div>
+                    </div> -->
 
                     <!--Course name entry-->
                     <div class="form-group">
-                        <label for="course_name">Course name</label>
-                        <input type="text" class="form-control" id="course_name" name="course_name" value="{{course[1]}}">
+                        <!-- <label for="course_name">Course name</label>
+                        <input type="text" class="form-control" id="course_name" name="course_name" value="{{course[1]}}"> -->
+                        {{ form.course_name.label(class="form-label") }}
+                        {{ form.course_name(class="form-control", value=course[1]) }}
                         <small id="course_name_help" class="form-text text-muted">Course must belong to the right college.</small>
                     </div>
                 </div>
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Update Course</button>
+                        {{ form.edit_course_button(class="btn btn-primary") }}
+                        <!-- <button type="submit" class="btn btn-primary">Update Course</button> -->
                     </div>
                 </form>
             </div>
@@ -116,6 +135,8 @@
            <!-- This is a form for adding a student to the database -->
         <form action="{{url_for('course.addCourse')}}" method="POST">
             <!--Course entry -->
+            {{ form.csrf_token }}
+            {{ form.hidden_tag() }}
             <div>
                 <select class="form-control col ms-1 me-2" id="college_code" name="college_code">
                     <option disabled selected>College</option>
@@ -128,22 +149,27 @@
         
             <!--Course code entry-->
             <div class="form-group">
-                <label for="course_code">Course Code</label>
-                <input type="text" class="form-control" id="course_code" name="course_code" placeholder="Enter course code">
+                {{ form.course_code.label(class="form-label") }}
+                {{ form.course_code(class="form-control") }}
+                <!-- <label for="course_code">Course Code</label>
+                <input type="text" class="form-control" id="course_code" name="course_code" placeholder="Enter course code"> -->
                 <small id="lastname_help" class="form-text text-muted">Course code must be 4 or more characters .(e.g BSCS)</small>
             </div>
 
             <!--Course name entry-->
             <div class="form-group">
-                <label for="course_name">Course name</label>
-                <input type="text" class="form-control" id="course_name" name="course_name" placeholder="Enter course name">
+                {{ form.course_name.label(class="form-label") }}
+                {{ form.course_name(class="form-control") }}
+                <!-- <label for="course_name">Course name</.label>
+                <input type="text" class="form-control" id="course_name" name="course_name" placeholder="Enter course name"> -->
                 <small id="course_name_help" class="form-text text-muted">Course must belong to the right college.</small>
             </div>
         </div>
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Add Course</button>
+                {{ form.add_course_button(class="btn btn-primary") }}
+                <!-- <button type="submit" class="btn btn-primary">Add Course</button> -->
             </div>
         </form>
       </div>

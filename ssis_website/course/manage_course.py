@@ -1,21 +1,25 @@
-from flask import Blueprint, render_template, request, flash, redirect, url_for
+from flask import render_template, request, flash, redirect, url_for
 import ssis_website.models as db
 import re
+from . import course_bp
+from ssis_website.course.course_form import CourseForm
 
-course = Blueprint('course', __name__)
 
-@course.route("/course")
+@course_bp.route("/course")
 def displayCoursePage():
+    form = CourseForm()
     courses = db.Course.display_courses()
     college_options = db.College.get_colleges()
-    return render_template("course_page.html", courses = courses, college_options = college_options)
+    return render_template("course_page.html", courses = courses, college_options = college_options, 
+                            form = form)
 
-@course.route("/course/add_course", methods=['GET', 'POST'])
+@course_bp.route("/course/add_course", methods=['GET', 'POST'])
 def addCourse():
+    form = CourseForm()
     if request.method == 'POST':
-        college_code = request.form['college_code'].upper()
-        course_code = request.form['course_code'].upper()
-        course_name = request.form['course_name'].upper()
+        college_code = request.form['college_code']
+        course_code = form.course_code.data.upper()
+        course_name = form.course_name.data.upper()
 
         try:
             if validateCourseCode(course_code):
@@ -29,12 +33,13 @@ def addCourse():
 
     return redirect(url_for("course.displayCoursePage"))
 
-@course.route("/course/edit_student", methods=["GET", "POST"])
+@course_bp.route("/course/edit_student", methods=["GET", "POST"])
 def editCourse():
+    form = CourseForm()
     if request.method == "POST":
         old_course_code = request.form['old_course_code'].upper()
-        course_code = request.form['course_code'].upper()
-        course_name = request.form['course_name'].upper()
+        course_code = form.course_code.data.upper()
+        course_name = form.course_name.data.upper()
         college_code = request.form['college_code'].upper()
         try:
             if validateCourseCode(course_code):
@@ -47,7 +52,7 @@ def editCourse():
        
     return redirect(url_for("course.displayCoursePage"))
 
-@course.route("/course/delete_course", methods=["POST"]) 
+@course_bp.route("/course/delete_course", methods=["POST"]) 
 def deleteCourse():
     if request.method == "POST":
         course_code = request.form.get('course_code_del')
@@ -55,13 +60,17 @@ def deleteCourse():
     
     return redirect(url_for("course.displayCoursePage"))
 
-@course.route("/course/search", methods=["GET","POST"])
+@course_bp.route("/course/search", methods=["GET","POST"])
 def searchCourse():
+    form = CourseForm()
+    result = []
     if request.method == "POST":
         course_search_key = request.form['course_search_key']
-        results = db.Course.search_course(course_search_key)
+        result = db.Course.search_course(course_search_key)
+        if len(result) == 0:
+            result = db.Course.display_courses()
 
-    return render_template("course_page.html", courses=results)
+    return render_template("course_page.html", courses=result, form=form)
 
 def validateCourseCode(code):
     pattern1 = re.compile(r'BS\w{2}')
