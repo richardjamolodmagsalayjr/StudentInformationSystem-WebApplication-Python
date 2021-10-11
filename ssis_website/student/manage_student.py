@@ -9,7 +9,7 @@ def displayStudentPage():
     form = StudentForm()
     students = db.Student.display_students()
     course_options = db.Course.get_course()
-    gender_options = ["Male", "Female", "Gay", "Lesbain", "Bisexual"]
+    gender_options = ["Male", "Female", "Other"]
     return render_template("student_page.html", students=students, course_options=course_options,
                             gender_options=gender_options, form=form)  
 
@@ -20,10 +20,12 @@ def addStudent():
         id_number = form.id_number.data
         firstname = form.firstname.data.upper()
         lastname = form.lastname.data.upper()
-        gender = request.form['gender']
         course_code = request.form['course_code'].upper()
         year_level = int(request.form['year_level'])
-
+        if request.form['gender'] == "Other":
+            gender = request.form['gender_other']
+        else:
+            gender = request.form['gender']
         try:
             if validateIdNumber(id_number):
                 student = db.Student(id_number, firstname, lastname, gender, year_level, course_code)
@@ -44,10 +46,12 @@ def editStudent():
         id_number = form.id_number.data
         firstname = form.id_number.data.upper()
         lastname = form.id_number.data.upper()
-        gender = request.form['gender']
         course_code = request.form['course_code'].upper()
         year_level = int(request.form['year_level'])
-
+        if request.form['gender'] == "Other":
+            gender = request.form['gender_other']
+        else:
+            gender = request.form['gender']
         try:
             if validateIdNumber(id_number):
                 db.Student.edit_student(id_number, firstname, lastname, gender, year_level, course_code, old_id_number)

@@ -2,8 +2,6 @@
 
 {% block page_label %}Manage Students{% endblock %}
 {% block manage_student %} 
-  
-  
       
 <div class="container">
   <div class="row justify-content-between">
@@ -68,7 +66,7 @@
               </button>
             </td>
           </tr>
-                        
+          <!-- edit student modal -->              
             <div class="modal fade" id="edit-student-modal{{student[0]}}" tabindex="-1" aria-labelledby="edit-student-label" aria-hidden="true">
               <div class="modal-dialog">
                 <div class="modal-content">
@@ -91,7 +89,7 @@
                           />
                         </div>
                         <!--Id number entry -->
-                        <div class="form-group"> 
+                        <div class="form-group mb-3"> 
                           {{ form.id_number.label(class="form-label")}}
                           {{ form.id_number(class="form-control", value=student[0] )}}    
                           <!-- <label for="id_number">ID number</label>
@@ -106,7 +104,7 @@
                         </div>
 
                       <!--firstname entry-->
-                      <div class="form-group">
+                      <div class="form-group mb-3">
                         {{ form.firstname.label(class="form-label") }}
                         {{ form.firstname(class="form-control", value=student[1])}}
                         <!-- <label for="firstname">Firstname</label>
@@ -121,7 +119,7 @@
                       </div>
                       
                         <!--lastname entry-->
-                      <div class="form-group">
+                      <div class="form-group mb-3">
                         {{ form.lastname.label(class="form-label") }}
                         {{ form.lastname(class="form-control", value=student[2]) }}
                         <!-- <label for="lastname">Lastname</label>
@@ -136,17 +134,71 @@
                       </div>
 
                       <!-- gender entry -->
-                      <div class='form-group'>
-                        <select required=True class="form-control col ms-1 me-2" id="gender" name="gender">
-                          <option disabled>Gender</option>
-                          <option>Male</option>
-                          <option>Female</option>
-                          <option>Others</option>
-                        </select>
-                      </div>
+            <div class='form-group mb-3'>
+              <div>
+                <label for="gender form-label">Gender</label>
+              </div>
+          
+              {% if student[5] == "Male" %}
+                <div class="form-check form-check-inline">
+                  <input checked class="form-check-input" type="radio" name="gender" id="gender" value="Male">
+                  <label class="form-check-label">Male</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="gender" id="gender" value="Female">
+                  <label class="form-check-label">Female</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="gender" id="gender" value="Other">
+                  <input type="text" 
+                  class="form-control" 
+                  id="gender_other" 
+                  name="gender_other" 
+                  placeholder="Other"
+                  /> 
+                </div> 
+              {% elif student[5] == "Female" %}
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="gender" id="gender" value="Male">
+                  <label class="form-check-label">Male</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input checked class="form-check-input" type="radio" name="gender" id="gender" value="Female">
+                  <label class="form-check-label">Female</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="gender" id="gender" value="Other">
+                  <input type="text" 
+                  class="form-control" 
+                  id="gender_other" 
+                  name="gender_other" 
+                  placeholder="Other"
+                  /> 
+              {% else %}
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="gender" id="gender" value="Male">
+                <label class="form-check-label">Male</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="gender" id="gender" value="Female">
+                <label class="form-check-label">Female</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input checked class="form-check-input" type="radio" name="gender" id="gender" value="Other">
+                <input type="text" 
+                class="form-control" 
+                id="gender_other" 
+                name="gender_other" 
+                placeholder="Other"
+                value = "{{student[5]}}"
+                required
+                /> 
+              {% endif %}
+            </div>
 
                       <!-- year_level entry -->
-                      <div class='form-group'>
+                      <div class='form-group mb-3'>
+                        <label for="year_level form-label">Year Level</label>
                         <select type="number" required=True class="form-control col ms-1 me-2" id="year_level" name="year_level">
                           <option disabled><b>Year</b></option>
                             <option>1</option>
@@ -157,7 +209,8 @@
                         </select>
                       </div>
 
-                      <div class='form-group'>
+                      <div class='form-group mb-3'>
+                        <label for="course form-label">Course</label>
                         <select  required=True class="form-control col col me-1" id="course_code" name="course_code">
                             <option disabled>Course</option>
                             {% for course in course_options %}
@@ -197,7 +250,7 @@
             <form action="{{url_for('student.addStudent')}}" method="POST">
               {{ form.hidden_tag() }}
               <!--Id number entry -->
-              <div class="form-group">
+              <div class="form-group mb-3">
                 {{ form.id_number.label(class="form-label") }}   
                 {{ form.id_number(class="form-control", placeholder="Enter ID Number") }} 
                 <!-- <label for="id_number">ID number</label>
@@ -212,7 +265,7 @@
               </div>
 
             <!--firstname entry-->
-            <div class="form-group">
+            <div class="form-group mb-3">
               {{ form.firstname.label(class="form-label") }}   
               {{ form.firstname(class="form-control", placeholder="Enter firstname") }}
               <!-- <label for="firstname">Firstname</label>
@@ -227,7 +280,7 @@
             </div>
             
               <!--lastname entry-->
-            <div class="form-group">
+            <div class="form-group mb-3">
               {{ form.lastname.label(class="form-label") }}   
               {{ form.lastname(class="form-control", placeholder="Enter lastname") }}
               <!-- <label for="lastname">Lastname</label>
@@ -242,17 +295,33 @@
             </div>
 
             <!-- gender entry -->
-            <div class='form-group mb-1'>
-              <select required=True class="form-control col ms-1 me-2" id="gender" name="gender">
-                <option disabled selected>Gender</option>
-                {% for gender in gender_options %}
-                  <option>{{gender}}</option>
-                {% endfor %}
-              </select>
+            
+            <div class='form-group mb-3'>
+              <div>
+                <label for="gender form-label">Gender</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="gender" id="gender" value="Male">
+                  <label class="form-check-label">Male</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="gender" id="gender" value="Female">
+                  <label class="form-check-label">Female</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="gender" id="gender" value="Other">
+                  <input type="text" 
+                  class="form-control" 
+                  id="gender_other" 
+                  name="gender_other" 
+                  placeholder="Other"
+                  /> 
+                </div>   
             </div>
 
             <!-- year_level entry -->
-            <div class='form-group mb-1'>
+            <div class='form-group mb-3'>
+              <label for="year_level form-label">Year Level</label>
               <select type="number" required=True class="form-control col ms-1 me-2" id="year_level" name="year_level">
                 <option disabled selected><b>Year</b></option>
                 <option>1</option>
@@ -263,7 +332,8 @@
               </select>
             </div>
 
-            <div class='form-group'>
+            <div class='form-group mb-3'>
+              <label for="course form-label">Course</label>
               <select  required=True class="form-control col ms-1 me-1" id="course_code" name="course_code">
                   <option disabled selected hidden>Course</option>
                   {% for course in course_options %}
