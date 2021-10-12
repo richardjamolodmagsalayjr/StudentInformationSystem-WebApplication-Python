@@ -44,8 +44,8 @@ def editStudent():
     if request.method == "POST":
         old_id_number = request.form['old_id_number']
         id_number = form.id_number.data
-        firstname = form.id_number.data.upper()
-        lastname = form.id_number.data.upper()
+        firstname = form.firstname.data.upper()
+        lastname = form.lastname.data.upper()
         course_code = request.form['course_code'].upper()
         year_level = int(request.form['year_level'])
         if request.form['gender'] == "Other":
