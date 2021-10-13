@@ -5,10 +5,14 @@ from . import course_bp
 from ssis_website.course.course_form import CourseForm
 
 
-@course_bp.route("/course")
+@course_bp.route("/course", methods=["GET","POST"])
 def displayCoursePage():
+    offset = 0
+    if request.method == "POST":
+        offset = int(request.form['offset'])
+
     form = CourseForm()
-    courses = db.Course.display_courses()
+    courses = db.Course.display_courses(offset)
     college_options = db.College.get_colleges()
     return render_template("course_page.html", courses = courses, college_options = college_options, 
                             form = form)

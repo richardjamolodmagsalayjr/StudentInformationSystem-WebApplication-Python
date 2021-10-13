@@ -30,9 +30,9 @@ class Student():
         database.commit() 
 
     @classmethod
-    def display_students(cls):
-        query = "SELECT * FROM students"
-        cursor.execute(query)    
+    def display_students(cls, offset):
+        query = "SELECT * FROM students LIMIT 5 OFFSET %s"
+        cursor.execute(query, [offset])    
         students = cursor.fetchall()
         return students 
 
@@ -51,12 +51,19 @@ class Student():
         cursor.execute(query,data)
         database.commit()
 
+    @classmethod
+    def paginate_student_page(cls, offset):
+        query = "SELECT * FROM students LIMIT 5, {offset}"
+        cursor.execute(query)    
+        students = cursor.fetchall()
+        return students
+
     @classmethod 
     def search_student(cls, key):
-        query = "SELECT * FROM students WHERE student_id=%s or firstname=%s or lastname=%s or course_code_id=%s \
-            or year=%s or gender=%s"
+        query = "SELECT * FROM students WHERE student_id LIKE %s or firstname LIKE %s or lastname LIKE %s or course_code_id LIKE %s \
+            or year LIKE %s or gender LIKE %s"
 
-        data = [key,key,key,key,key,key]
+        data = ['%'+key+'%','%'+key+'%','%'+key+'%','%'+key+'%','%'+key+'%','%'+key+'%']
         cursor.execute(query,data)
         results = cursor.fetchall()
         return results
@@ -84,9 +91,9 @@ class Course():
         database.commit()
 
     @classmethod
-    def display_courses(cls):
-        query = "SELECT * FROM courses"
-        cursor.execute(query)
+    def display_courses(cls, offset):
+        query = "SELECT * FROM courses LIMIT 5 OFFSET %s"
+        cursor.execute(query, [offset])
         courses = cursor.fetchall()
         return courses 
 
@@ -106,8 +113,8 @@ class Course():
 
     @classmethod
     def search_course(cls, key):
-        query = "SELECT * FROM courses WHERE course_code=%s or course_name=%s or college_code_id=%s"
-        data = [key,key, key]
+        query = "SELECT * FROM courses WHERE course_code LIKE %s or course_name LIKE %s or college_code_id LIKE %s"
+        data = ['%'+key+'%','%'+key+'%','%'+key+'%']
         cursor.execute(query,data)
         result = cursor.fetchall()
         return result
@@ -132,9 +139,9 @@ class College():
         database.commit()
 
     @classmethod
-    def display_colleges(cls):
-        query = "SELECT * FROM colleges"
-        cursor.execute(query)
+    def display_colleges(cls, offset):
+        query = "SELECT * FROM colleges LIMIT 5 OFFSET %s"
+        cursor.execute(query, [offset])
         colleges = cursor.fetchall()
         return colleges
 
@@ -154,8 +161,8 @@ class College():
 
     @classmethod
     def search_college(cls, key):
-        query = "SELECT * FROM colleges WHERE college_code=%s or college_name=%s"
-        data = [key,key]
+        query = "SELECT * FROM colleges WHERE college_code LIKE %s or college_name LIKE %s"
+        data = ['%'+key+'%','%'+key+'%']
         cursor.execute(query,data)
         result = cursor.fetchall()
         return result

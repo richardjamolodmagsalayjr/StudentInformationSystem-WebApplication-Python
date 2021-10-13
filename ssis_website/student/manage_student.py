@@ -4,10 +4,23 @@ import re
 from . import student_bp
 from ssis_website.student.student_form import StudentForm
 
+# @student_bp.route("/student", methods=['GET', 'POST'])
+# def PaginateStudentPage():
+#     form = StudentForm()
+#     students = db.Student.display_students()
+#     course_options = db.Course.get_course()
+#     gender_options = ["Male", "Female", "Other"]
+#     return render_template("student_page.html", students=students, course_options=course_options,
+#                             gender_options=gender_options, form=form)  
+
 @student_bp.route("/student", methods=['GET', 'POST'])
 def displayStudentPage():
+    offset = 0
+    if request.method == "POST":
+        offset = int(request.form['offset'])
+           
     form = StudentForm()
-    students = db.Student.display_students()
+    students = db.Student.display_students(offset)
     course_options = db.Course.get_course()
     gender_options = ["Male", "Female", "Other"]
     return render_template("student_page.html", students=students, course_options=course_options,

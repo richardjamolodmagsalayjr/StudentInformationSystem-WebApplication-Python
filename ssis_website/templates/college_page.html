@@ -14,6 +14,7 @@
       </div>
       <div class="col-4">
         <form class="d-flex" action="{{url_for('college.searchCollege')}}" method="POST">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
           <input class="form-control mr-sm-2" name="college_search_key" type="search" placeholder="Search" aria-label="Search">
           <button class="btn btn-primary my-2 my-sm-0 px-4" type="submit">
             <i class="bi bi-search"></i>
@@ -109,8 +110,40 @@
         {% endfor %}
       </tbody>
     </table>
+  <div class="btn-toolbar d-flex justify-content-center bd-highlight" role="toolbar" aria-label="Toolbar with button groups">
+    <div class="btn-group me-2" role="group" aria-label="page_buttons">
+      <form hidden id="1" class="form-group" action="{{url_for('college.displayCollegePage')}}" method="POST">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+        <input type="text" value="0" name="offset" id="offset" hidden> 
+      </form>
+      <button form ="1" type="submit" class="btn btn-secondary">1</button>
+      
+      <form hidden id="2" class="form-group" action="{{url_for('college.displayCollegePage')}}" method="POST">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+        <input type="text" value="5" name="offset" id="offset" hidden> 
+      </form>
+      <button form="2" type="submit" class="btn btn-secondary">2</button>
+
+      <form hidden id="3" class="form-group" action="{{url_for('college.displayCollegePage')}}" method="POST">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+        <input type="text" value="10" name="offset" id="offset" hidden> 
+      </form>
+      <button form="3" type="submit" class="btn btn-secondary">3</button>
+
+      <form hidden id="4" class="form-group" action="{{url_for('college.displayCollegePage')}}" method="POST">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+        <input type="text" value="15" name="offset" id="offset" hidden> 
+      </form>
+      <button form="4" type="submit" class="btn btn-secondary">4</button>
+
+      <form hidden id="5" class="form-group" action="{{url_for('college.displayCollegePage')}}" method="POST">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+        <input type="text" value="25" name="offset" id="offset" hidden> 
+      </form>
+      <button form ="5" type="submit" class="btn btn-secondary">5</button>
+    </div>
   </div>
-  
+</div>  
 <!-- Add Modal -->
 <div class="modal fade" id="add-college-modal" tabindex="-1" aria-labelledby="add-college-label" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">

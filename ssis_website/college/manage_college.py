@@ -5,10 +5,14 @@ from ssis_website.college.college_form import CollegeForm
 from . import college_bp 
 #college = Blueprint('college', __name__)
 
-@college_bp.route("/college")
+@college_bp.route("/college", methods = ["GET", "POST"])
 def displayCollegePage():
+    offset = 0
+    if request.method == "POST":
+        offset = int(request.form['offset'])
+
     form = CollegeForm()
-    colleges = db.College.display_colleges()
+    colleges = db.College.display_colleges(offset)
     return render_template("college_page.html", colleges = colleges, form = form)
 
 @college_bp.route("/college/add_college", methods = ["GET", "POST"])
@@ -66,7 +70,7 @@ def searchCollege():
         college_search_key = request.form['college_search_key']
         result = db.College.search_college(college_search_key)
         if len(result) == 0:
-            result = db.College.display_colleges()
+            result = db.College.display_colleges(0)
 
     return render_template("college_page.html", colleges = result, form=form)
 
