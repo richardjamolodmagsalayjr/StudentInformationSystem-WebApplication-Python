@@ -4,6 +4,8 @@ import re
 from . import course_bp
 from ssis_website.course.course_form import CourseForm
 
+from ssis_website import course
+
 
 @course_bp.route("/course", methods=["GET","POST"])
 def displayCoursePage():
@@ -70,9 +72,10 @@ def searchCourse():
     result = []
     if request.method == "POST":
         course_search_key = request.form['course_search_key']
-        result = db.Course.search_course(course_search_key)
-        if len(result) == 0:
-            result = db.Course.display_courses()
+        if course_search_key == "" or course_search_key == None:
+            result = []
+        else:
+            result = db.Course.search_course(course_search_key)
 
     return render_template("course_page.html", courses=result, form=form)
 

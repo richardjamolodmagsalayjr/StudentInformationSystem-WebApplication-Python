@@ -68,9 +68,10 @@ def searchCollege():
     form = CollegeForm()
     if request.method == "POST":
         college_search_key = request.form['college_search_key']
-        result = db.College.search_college(college_search_key)
-        if len(result) == 0:
-            result = db.College.display_colleges(0)
+        if college_search_key == "" or college_search_key == None:
+            result = []
+        else:
+            result = db.College.search_college(college_search_key)
 
     return render_template("college_page.html", colleges = result, form=form)
 
