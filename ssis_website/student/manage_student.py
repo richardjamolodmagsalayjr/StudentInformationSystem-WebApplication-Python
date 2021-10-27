@@ -92,9 +92,11 @@ def searchStudent():
     gender_options = ["Male", "Female", "Gay", "Lesbain", "Bisexual"]
     if request.method == "POST":
         student_search_key = request.form['student_search_key']
-        result = db.Student.search_student(student_search_key)
-        if len(result) == 0:
-            result = db.Student.display_students()
+        if student_search_key == "" or student_search_key == None:
+            result =[]
+        else:
+            result = db.Student.search_student(student_search_key)
+
     return render_template("student_page.html", students=result, form=form, course_options = course_options,
                             gender_options = gender_options)
 

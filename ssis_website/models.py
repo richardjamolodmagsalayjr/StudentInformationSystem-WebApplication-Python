@@ -66,6 +66,7 @@ class Student():
         data = ['%'+key+'%','%'+key+'%','%'+key+'%','%'+key+'%','%'+key+'%','%'+key+'%']
         cursor.execute(query,data)
         results = cursor.fetchall()
+        print(results)
         return results
 
 class Course():

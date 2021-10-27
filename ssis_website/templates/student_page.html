@@ -1,12 +1,12 @@
 {% extends "base_layout.html" %}
 
-{% block page_label %}Manage Students{% endblock %}
+{% block page_label %} <i class="bi bi-person"></i> Manage Students{% endblock %}
 {% block manage_student %} 
       
 <div class="container">
   <div class="row justify-content-between">
     <div class="col-4">
-      <button class="btn btn-success me-5" type="button" data-bs-toggle="modal" data-bs-target="#add-student-modal">
+      <button class="btn btn-success me-5" id="add_student_btn" type="button" data-bs-toggle="modal" data-bs-target="#add-student-modal">
         <i class="bi bi-person-plus"></i>
         Add Student
       </button>
@@ -92,14 +92,6 @@
                         <div class="form-group mb-3"> 
                           {{ form.id_number.label(class="form-label")}}
                           {{ form.id_number(class="form-control", value=student[0] )}}    
-                          <!-- <label for="id_number">ID number</label>
-                          <input type="text" 
-                          class="form-control" 
-                          id="id_number" 
-                          name="id_number" 
-                          value="{{student[0]}}"
-                          required=True
-                          /> -->
                           <small id="firstname_help" class="form-text text-muted">e.g 2019-0001.</small>
                         </div>
 
@@ -107,14 +99,6 @@
                       <div class="form-group mb-3">
                         {{ form.firstname.label(class="form-label") }}
                         {{ form.firstname(class="form-control", value=student[1])}}
-                        <!-- <label for="firstname">Firstname</label>
-                        <input type="text" 
-                          class="form-control" 
-                          id="firstname" 
-                          name="firstname" 
-                          value="{{student[1]}}"
-                          required=True
-                        /> -->
                         <small id="firstname_help" class="form-text text-muted">Firstname must be 2 or more characters.</small>
                       </div>
                       
@@ -122,14 +106,6 @@
                       <div class="form-group mb-3">
                         {{ form.lastname.label(class="form-label") }}
                         {{ form.lastname(class="form-control", value=student[2]) }}
-                        <!-- <label for="lastname">Lastname</label>
-                        <input type="text" 
-                          class="form-control" 
-                          id="lastname" 
-                          name="lastname" 
-                          value="{{student[2]}}"
-                          required=True
-                        /> -->
                         <small id="lastname_help" class="form-text text-muted">Lastname must be 2 or more characters.</small>
                       </div>
 
@@ -196,43 +172,43 @@
               {% endif %}
             </div>
 
-                      <!-- year_level entry -->
-                      <div class='form-group mb-3'>
-                        <label for="year_level form-label">Year Level</label>
-                        <select type="number" required=True class="form-control col ms-1 me-2" id="year_level" name="year_level">
-                          <option disabled><b>Year</b></option>
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
-                        </select>
-                      </div>
+                    <!-- year_level entry -->
+                    <div class='form-group mb-3'>
+                      <label for="year_level form-label">Year Level</label>
+                      <select type="number" required=True class="form-control col ms-1 me-2" id="year_level" name="year_level">
+                        <option disabled><b>Year</b></option>
+                          <option>1</option>
+                          <option>2</option>
+                          <option>3</option>
+                          <option>4</option>
+                          <option>5</option>
+                      </select>
+                    </div>
 
-                      <div class='form-group mb-3'>
-                        <label for="course form-label">Course</label>
-                        <select  required=True class="form-control col col me-1" id="course_code" name="course_code">
-                            <option disabled>Course</option>
-                            {% for course in course_options %}
-                              {% if course[0] == student[3] %}
-                                <option selected>{{student[3]}}</option>
-                              {% else %}
-                                <option>{{course[0]}}</option>
-                              {% endif %}
-                            {% endfor %}
-                        </select>
-                      </div>
+                    <div class='form-group mb-3'>
+                      <label for="course form-label">Course</label>
+                      <select  required=True class="form-control col col me-1" id="course_code" name="course_code">
+                          <option disabled>Course</option>
+                          {% for course in course_options %}
+                            {% if course[0] == student[3] %}
+                              <option selected>{{student[3]}}</option>
+                            {% else %}
+                              <option>{{course[0]}}</option>
+                            {% endif %}
+                          {% endfor %}
+                      </select>
                     </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                      {{ form.edit_student_button(class="btn btn-primary") }}
-                      <!-- <button type="submit" class="btn btn-primary">Update Student</button> -->
-                    </div>
-                  </form>
-                </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    {{ form.edit_student_button(class="btn btn-primary") }}
+                    <!-- <button type="submit" class="btn btn-primary">Update Student</button> -->
+                  </div>
+                </form>
               </div>
             </div>
-          {% endfor %}
+          </div>
+        {% endfor %}
       </tbody>
     </table>
   <div class="btn-toolbar d-flex justify-content-center bd-highlight" role="toolbar" aria-label="Toolbar with button groups">
@@ -284,14 +260,6 @@
               <div class="form-group mb-3">
                 {{ form.id_number.label(class="form-label") }}   
                 {{ form.id_number(class="form-control", placeholder="Enter ID Number") }} 
-                <!-- <label for="id_number">ID number</label>
-                <input type="text" 
-                class="form-control" 
-                id="id_number" 
-                name="id_number" 
-                placeholder="Enter ID number"
-                required=True
-                /> -->
                 <small id="firstname_help" class="form-text text-muted">e.g 2019-0001.</small> 
               </div>
 
@@ -299,14 +267,6 @@
             <div class="form-group mb-3">
               {{ form.firstname.label(class="form-label") }}   
               {{ form.firstname(class="form-control", placeholder="Enter firstname") }}
-              <!-- <label for="firstname">Firstname</label>
-              <input type="text" 
-                class="form-control" 
-                id="firstname" 
-                name="firstname" 
-                placeholder="Enter firstname"
-                required=True
-              /> -->
                 <small id="firstname_help" class="form-text text-muted">Firstname must be 2 or more characters.</small>
             </div>
             
@@ -314,38 +274,30 @@
             <div class="form-group mb-3">
               {{ form.lastname.label(class="form-label") }}   
               {{ form.lastname(class="form-control", placeholder="Enter lastname") }}
-              <!-- <label for="lastname">Lastname</label>
-              <input type="text" 
-                class="form-control" 
-                id="lastname" 
-                name="lastname" 
-                placeholder="Enter lastname"
-                required=True
-              /> -->
               <small id="lastname_help" class="form-text text-muted">Lastname must be 2 or more characters.</small>
             </div>
 
             <!-- gender entry -->
-            
             <div class='form-group mb-3'>
               <div>
                 <label for="gender form-label">Gender</label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="gender" id="gender" value="Male">
+                  <input class="form-check-input gender" type="radio" name="gender" id="gender_male" value="Male">
                   <label class="form-check-label">Male</label>
                 </div>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="gender" id="gender" value="Female">
+                <div class="form-check form-check-inline gender">
+                  <input class="form-check-input" type="radio" name="gender" id="gender_female" value="Female">
                   <label class="form-check-label">Female</label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="gender" id="gender" value="Other">
+                  <input class="form-check-input" type="radio" name="gender" id="gender_otr" value="Other">
                   <input type="text" 
                   class="form-control" 
-                  id="gender_other" 
+                  id="gender_other_add" 
                   name="gender_other" 
                   placeholder="Other"
+                  disabled
                   /> 
                 </div>   
             </div>
