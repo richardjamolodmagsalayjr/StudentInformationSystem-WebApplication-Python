@@ -31,7 +31,7 @@ class Student():
 
     @classmethod
     def display_students(cls, offset):
-        query = "SELECT * FROM students LIMIT 5 OFFSET %s"
+        query = "SELECT * FROM students LIMIT 8 OFFSET %s"
         cursor.execute(query, [offset])    
         students = cursor.fetchall()
         return students 
@@ -53,7 +53,7 @@ class Student():
 
     @classmethod
     def paginate_student_page(cls, offset):
-        query = "SELECT * FROM students LIMIT 5, {offset}"
+        query = "SELECT * FROM students LIMIT 8, {offset}"
         cursor.execute(query)    
         students = cursor.fetchall()
         return students
