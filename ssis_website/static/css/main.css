@@ -1,0 +1,5 @@
+.url_column {
+    white-space:pre-line;
+    word-break: break-all;
+    width: 30%;
+}
