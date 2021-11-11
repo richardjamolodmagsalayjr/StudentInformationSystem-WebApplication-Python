@@ -1,9 +1,11 @@
-from flask import render_template, request, flash, redirect, url_for
+from flask import render_template, request, flash, redirect, url_for, jsonify
 import ssis_website.models as db
 import re
 from . import student_bp
 from ssis_website.student.student_form import StudentForm
-
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 # @student_bp.route("/student", methods=['GET', 'POST'])
 # def PaginateStudentPage():
 #     form = StudentForm()
@@ -22,14 +24,14 @@ def displayStudentPage():
     form = StudentForm()
     students = db.Student.display_students(offset)
     course_options = db.Course.get_course()
-    gender_options = ["Male", "Female", "Other"]
-    return render_template("student_page.html", students=students, course_options=course_options,
-                            gender_options=gender_options, form=form)  
+    return render_template("student_page.html", students=students, course_options=course_options, form=form)  
 
 @student_bp.route("/student/add_student", methods=['GET', 'POST'])
 def addStudent():
     form = StudentForm()
     if request.method == "POST":
+        photo = cloudinary.uploader.upload(request.files["student_photo"], folder="/students")
+        photo_url = photo["url"]
         id_number = form.id_number.data
         firstname = form.firstname.data.upper()
         lastname = form.lastname.data.upper()
@@ -41,7 +43,7 @@ def addStudent():
             gender = request.form['gender']
         try:
             if validateIdNumber(id_number):
-                student = db.Student(id_number, firstname, lastname, gender, year_level, course_code)
+                student = db.Student(id_number, firstname, lastname, gender, year_level, course_code, photo_url)
                 student.add_student()
                 flash('Student record was added succesfully!', 'success')
             else:
