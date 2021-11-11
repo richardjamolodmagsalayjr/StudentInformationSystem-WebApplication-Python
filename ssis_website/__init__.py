@@ -1,7 +1,10 @@
 import os
 from flask import Flask
-from config import DB_USERNAME, DB_PASSWORD, DB_NAME, DB_HOST, SECRET_KEY
+from config import DB_USERNAME, DB_PASSWORD, DB_NAME, DB_HOST, SECRET_KEY, API_KEY, CLOUD_NAME, API_SECRET
 from flask_wtf.csrf import CSRFProtect
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
 #CSRFProtect()
 
@@ -15,6 +18,12 @@ def create_app():
         MYSQL_PASSWORD = DB_PASSWORD,
         MYSQL_DATABASE=DB_NAME,
         MYSQL_HOST=DB_HOST
+    )
+    cloudinary.config(
+        cloud_name = CLOUD_NAME,
+        api_key=API_KEY, 
+        api_secret=API_SECRET,
+        secure = True
     )
     CSRFProtect(app)
     
