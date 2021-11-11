@@ -1,6 +1,8 @@
 #from ssis_website import database
-from config import DB_USERNAME, DB_PASSWORD, DB_NAME, DB_HOST, SECRET_KEY, DB_PORT
+from config import DB_USERNAME, DB_PASSWORD, DB_NAME, DB_HOST, SECRET_KEY, DB_PORT, CLOUD_NAME, API_KEY, API_SECRET
 import mysql.connector
+import cloudinary
+import cloudinary.uploader
 
 database = mysql.connector.connect(
     host = DB_HOST,
@@ -9,26 +11,33 @@ database = mysql.connector.connect(
     passwd= DB_PASSWORD,
     database = DB_NAME
     )
+cloudinary.config(
+        cloud_name = CLOUD_NAME,
+        api_key=API_KEY, 
+        api_secret=API_SECRET,
+        secure = True
+    )
 cursor = database.cursor() 
 
 class Student():
     
-    def __init__(self, id_number, firstname, lastname, gender, year, course):
+    def __init__(self, id_number, firstname, lastname, gender, year, course, photo_url = None):
         self.id_number = id_number
         self.firstname = firstname
         self.lastname = lastname
         self.gender = gender
         self.year = year
         self.course = course
+        self.photo_url = photo_url
 
     def add_student(self):
-        query = "INSERT INTO students(student_id, firstname, lastname, course_code_id, gender, year) \
-                VALUES (%s,%s,%s,%s,%s,%s)"
+        query = "INSERT INTO students(student_id, firstname, lastname, course_code_id, gender, year, photo_url) \
+                VALUES (%s,%s,%s,%s,%s,%s,%s)"
         data = [self.id_number, self.firstname, self.lastname, self.course, self.gender,
-                self.year]
+                self.year, self.photo_url]
         cursor.execute(query, data)
         database.commit() 
-
+    
     @classmethod
     def display_students(cls, offset):
         query = "SELECT * FROM students LIMIT 8 OFFSET %s"
