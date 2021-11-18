@@ -72,12 +72,12 @@ def searchCourse():
     result = []
     if request.method == "POST":
         course_search_key = request.form['course_search_key']
-        if course_search_key == "" or course_search_key == None:
-            result = []
-        else:
-            result = db.Course.search_course(course_search_key)
-
-    return render_template("course_page.html", courses=result, form=form)
+        results = db.Course.search_course(course_search_key)
+        if course_search_key == "" or course_search_key == None or len(results) == 0:
+            flash('No results', 'danger')
+            results = []
+        
+    return render_template("course_page.html", courses=results, form=form)
 
 def validateCourseCode(code):
     pattern1 = re.compile(r'BS\w{2}')

@@ -68,12 +68,12 @@ def searchCollege():
     form = CollegeForm()
     if request.method == "POST":
         college_search_key = request.form['college_search_key']
-        if college_search_key == "" or college_search_key == None:
-            result = []
-        else:
-            result = db.College.search_college(college_search_key)
-
-    return render_template("college_page.html", colleges = result, form=form)
+        results = db.College.search_college(college_search_key)
+        if college_search_key == "" or college_search_key == None or len(results) == 0:
+            flash("No Results", "danger")
+            results = []
+        
+    return render_template("college_page.html", colleges = results, form=form)
 
 def validateCollegeCode(code):
     pattern1 = re.compile(r'C\w{2}')

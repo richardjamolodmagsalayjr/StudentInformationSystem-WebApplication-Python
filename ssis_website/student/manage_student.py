@@ -6,14 +6,6 @@ from ssis_website.student.student_form import StudentForm
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
-# @student_bp.route("/student", methods=['GET', 'POST'])
-# def PaginateStudentPage():
-#     form = StudentForm()
-#     students = db.Student.display_students()
-#     course_options = db.Course.get_course()
-#     gender_options = ["Male", "Female", "Other"]
-#     return render_template("student_page.html", students=students, course_options=course_options,
-#                             gender_options=gender_options, form=form)  
 
 @student_bp.route("/student", methods=['GET', 'POST'])
 def displayStudentPage():
@@ -94,12 +86,12 @@ def searchStudent():
     gender_options = ["Male", "Female", "Gay", "Lesbain", "Bisexual"]
     if request.method == "POST":
         student_search_key = request.form['student_search_key']
-        if student_search_key == "" or student_search_key == None:
-            result =[]
-        else:
-            result = db.Student.search_student(student_search_key)
-
-    return render_template("student_page.html", students=result, form=form, course_options = course_options,
+        results = db.Student.search_student(student_search_key)
+        if student_search_key == "" or student_search_key == None or len(results) == 0:
+            flash('No results', 'danger')
+            results = []
+            
+    return render_template("student_page.html", students=results, form=form, course_options = course_options,
                             gender_options = gender_options)
 
 def validateIdNumber(id_number):
