@@ -78,7 +78,14 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                     <div class="modal-body">
-                      <form action="{{url_for('student.editStudent')}}" method="POST">
+                      <form enctype="multipart/form-data" action="{{url_for('student.editStudent')}}" method="POST">
+
+                        <div class="form-group mb-3">
+                          <label for="student_photo_edit">Change Student Photo:</label>
+                          <br>
+                          <input type="file" class="form-control-file" id = "student_photo_edit", name="student_photo_edit">
+                        </div>
+                     
                         {{ form.hidden_tag() }}
                         <!--old Id number entry -->
                         <div class="form-group">  
@@ -248,6 +255,7 @@
       </div>
   </div>
 </div>  
+
   <!-- Add student Modal -->
   <div class="modal fade" id="add-student-modal" tabindex="-1" aria-labelledby="add-student-label" aria-hidden="true">
     <div class="modal-dialog">
@@ -261,7 +269,7 @@
               {{ form.hidden_tag() }}
               
               <div class="form-group mb-3">
-                  <label for="student_pho to">Photo</label>
+                  <label for="student_photo">Photo</label>
                   <br>
                   <input type="file" class="form-control-file" id = "student_photo", name="student_photo">
               </div>

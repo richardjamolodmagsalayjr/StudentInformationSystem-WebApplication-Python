@@ -53,10 +53,10 @@ class Student():
         database.commit()
     
     @classmethod
-    def edit_student(cls, id_number, firstname, lastname, gender, year_level, course_code, old_id_number):
+    def edit_student(cls, id_number, firstname, lastname, gender, year_level, course_code, photo_url, old_id_number,):
         query = "UPDATE students SET student_id=%s, firstname=%s, lastname=%s, gender=%s, year=%s, \
-                course_code_id=%s WHERE student_id=%s"
-        data = [id_number, firstname, lastname, gender, year_level, course_code, old_id_number]
+                course_code_id=%s, photo_url=%s WHERE student_id=%s"
+        data = [id_number, firstname, lastname, gender, year_level, course_code, photo_url, old_id_number]
         cursor.execute(query,data)
         database.commit()
 

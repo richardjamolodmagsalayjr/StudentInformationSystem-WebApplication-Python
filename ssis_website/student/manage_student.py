@@ -49,6 +49,8 @@ def addStudent():
 def editStudent():
     form = StudentForm()
     if request.method == "POST":
+        photo = cloudinary.uploader.upload(request.files["student_photo_edit"], folder="/students")
+        photo_url = photo["url"]
         old_id_number = request.form['old_id_number']
         id_number = form.id_number.data
         firstname = form.firstname.data.upper()
@@ -61,7 +63,7 @@ def editStudent():
             gender = request.form['gender']
         try:
             if validateIdNumber(id_number):
-                db.Student.edit_student(id_number, firstname, lastname, gender, year_level, course_code, old_id_number)
+                db.Student.edit_student(id_number, firstname, lastname, gender, year_level, course_code, photo_url, old_id_number)
                 flash('Student record was updated succesfully!', 'success')
 
             else:
