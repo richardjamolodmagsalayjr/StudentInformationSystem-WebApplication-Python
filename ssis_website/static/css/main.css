@@ -1,5 +1,16 @@
-.url_column {
-    white-space:pre-line;
-    word-break: break-all;
-    width: 30%;
+td{
+    font-family: Helvetica, sans-serif;
+    font-size: 18px;
+    font-weight: 100;
+}
+
+th{
+    font-family: Helvetica, sans-serif;
+    font-size: 20px;
+    font-weight: 100;
+}
+
+.student_img{
+    border-image: 8px solid transparent;
+    border-radius: 100px;
 }
